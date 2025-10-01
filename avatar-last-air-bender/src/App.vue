@@ -1,5 +1,9 @@
 <script>
+import Statistics from './components/Statistics.vue'
 export default {
+  components: {
+    Statistics,
+  },
   data: () => ({
     newCharacter: {
       name: '',
@@ -36,28 +40,6 @@ export default {
       redTeam: [],
     },
   }),
-  computed: {
-    benderStatistics() {
-      const elements = ['Airbending', 'Waterbending', 'Earthbending', 'Firebending']
-      const statistics = {
-        Airbending: 0,
-        Waterbending: 0,
-        Earthbending: 0,
-        Firebending: 0,
-      }
-
-      this.characterList.forEach((character) => {
-        elements.forEach((element) => {
-          if (character.typeOfMagic.includes(element)) {
-            statistics[element] += 1
-          }
-        })
-      })
-
-      return statistics
-    },
-  },
-  watch: {},
   methods: {
     addNewCharacter() {
       this.characterList.push(this.newCharacter)
@@ -99,11 +81,7 @@ export default {
 </script>
 
 <template>
-  <h2>Statistics</h2>
-  <ul>
-    <li v-for="(stat, type) in benderStatistics" :key="type">{{ type }}: {{ stat }}</li>
-  </ul>
-
+  <Statistics :characterList="characterList" />
   <p v-if="characterList.length === 0">There are no characters</p>
   <h2 v-else>Characters</h2>
   <ul>
