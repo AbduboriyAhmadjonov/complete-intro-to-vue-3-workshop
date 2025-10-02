@@ -3,12 +3,14 @@ import FavouriteCharacters from './components/FavouriteCharacters.vue'
 import Statistics from './components/Statistics.vue'
 import NewCharacter from './components/NewCharacter.vue'
 import Characters from './components/Characters.vue'
+import BaseLayout from './components/BaseLayout.vue'
 export default {
   components: {
     Statistics,
     FavouriteCharacters,
     NewCharacter,
     Characters,
+    BaseLayout,
   },
   data: () => ({
     characterList: [
@@ -80,9 +82,17 @@ export default {
 </script>
 
 <template>
-  <Statistics :characterList="characterList" />
-  <Characters :characterList="characterList" @favouriteCharacter="favoriteCharacter" />
-  <FavouriteCharacters :favoriteList="favoriteList" />
+  <BaseLayout>
+    <template #sidebar>
+      <Statistics :characterList="characterList" />
+    </template>
+    <template #main>
+      <Characters :characterList="characterList" @favouriteCharacter="favoriteCharacter" />
+    </template>
+    <template #footer>
+      <FavouriteCharacters :favoriteList="favoriteList" />
+    </template>
+  </BaseLayout>
   <NewCharacter :characterList="characterList" />
   <h2>Who wins who?</h2>
   <p>Select your characters:</p>
