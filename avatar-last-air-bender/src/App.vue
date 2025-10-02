@@ -1,8 +1,10 @@
 <script>
+import FavouriteCharacters from './components/FavouriteCharacters.vue'
 import Statistics from './components/Statistics.vue'
 export default {
   components: {
     Statistics,
+    FavouriteCharacters,
   },
   data: () => ({
     newCharacter: {
@@ -90,16 +92,7 @@ export default {
       <button @click="favoriteCharacter(character)">⭐ Favorite</button>
     </li>
   </ul>
-  <h2>Favorite Characters</h2>
-  <ol v-if="favoriteList.length > 0">
-    <li v-for="character in favoriteList">
-      <p>{{ character.name }}</p>
-      <p>{{ character.typeOfMagic }}</p>
-      <p>{{ character.winRate }}%</p>
-      <p>{{ character.weakness }}</p>
-    </li>
-  </ol>
-  <p v-else>No favorite characters yet!</p>
+  <FavouriteCharacters :favoriteList="favoriteList" />
   <h2>New Character</h2>
   <!-- <pre>{{ newCharacter }}</pre> -->
   <label for="character-name">Name</label>
