@@ -6,6 +6,14 @@ export default {
       required: true,
     },
   },
+  data: () => ({
+    favoriteList: [],
+  }),
+  methods: {
+    favoriteCharacter(character) {
+      this.favoriteList.push(character)
+    },
+  },
 }
 </script>
 
