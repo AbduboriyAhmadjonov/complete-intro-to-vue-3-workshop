@@ -1,8 +1,10 @@
 <script>
 import Counter from './components/Counter.vue'
+import Button from './components/Button.vue'
+import BaseLayout from './components/BaseLayout.vue'
 
 export default {
-  components: { Counter },
+  components: { Counter, Button, BaseLayout },
   data() {
     return {
       message: 'Hello it works',
@@ -39,6 +41,12 @@ export default {
 </script>
 
 <template>
+  <BaseLayout>
+    <template v-slot:sidebar> Aside </template>
+    <template v-slot:main> Main </template>
+    <template v-slot:footer> Footer </template>
+  </BaseLayout>
+  <Button :submit="true"></Button>
   <Counter />
   <hr />
   <p v-if="message.length % 2 === 0">Even: {{ message.toUpperCase() }}</p>
