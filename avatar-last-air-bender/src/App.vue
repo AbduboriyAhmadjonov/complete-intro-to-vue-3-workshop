@@ -1,15 +1,16 @@
 <script>
 import FavouriteCharacters from './components/FavouriteCharacters.vue'
 import Statistics from './components/Statistics.vue'
+import NewCharacter from './components/NewCharacter.vue'
+import Characters from './components/Characters.vue'
 export default {
   components: {
     Statistics,
     FavouriteCharacters,
+    NewCharacter,
+    Characters,
   },
   data: () => ({
-    newCharacter: {
-      name: '',
-    },
     characterList: [
       {
         name: 'Aang',
@@ -43,10 +44,6 @@ export default {
     },
   }),
   methods: {
-    addNewCharacter() {
-      this.characterList.push(this.newCharacter)
-      this.newCharacter = { name: '', typeOfMagic: '', winRate: null, weakness: '' }
-    },
     favoriteCharacter(character) {
       this.favoriteList.push(character)
     },
@@ -84,40 +81,9 @@ export default {
 
 <template>
   <Statistics :characterList="characterList" />
-  <p v-if="characterList.length === 0">There are no characters</p>
-  <h2 v-else>Characters</h2>
-  <ul>
-    <li v-for="character in characterList">
-      <p>{{ character.name }}</p>
-      <button @click="favoriteCharacter(character)">⭐ Favorite</button>
-    </li>
-  </ul>
+  <Characters :characterList="characterList" @favouriteCharacter="favoriteCharacter" />
   <FavouriteCharacters :favoriteList="favoriteList" />
-  <h2>New Character</h2>
-  <!-- <pre>{{ newCharacter }}</pre> -->
-  <label for="character-name">Name</label>
-  <input type="text" v-model="newCharacter.name" @keyup.enter="addNewCharacter" />
-  <label for="character-type">Type of Magic</label>
-  <select v-model="newCharacter.typeOfMagic">
-    <option value="Airbending">Airbending</option>
-    <option value="Waterbending">Waterbending</option>
-    <option value="Earthbending">Earthbending</option>
-    <option value="Firebending">Firebending</option>
-  </select>
-  <label for="character-win-rate">Win Rate</label>
-  <input type="number" v-model="newCharacter.winRate" />
-  <label for="character-weakness">Weakness</label>
-  <select v-model="newCharacter.weakness">
-    <option value="Airbending">Airbending</option>
-    <option value="Waterbending">Waterbending</option>
-    <option value="Earthbending">Earthbending</option>
-    <option value="Firebending">Firebending</option>
-  </select>
-  <p>
-    <span v-for="(character, index) in characterList"
-      >{{ character.name }}{{ index === characterList.length - 1 ? '' : ', ' }}
-    </span>
-  </p>
+  <NewCharacter :characterList="characterList" />
   <h2>Who wins who?</h2>
   <p>Select your characters:</p>
   <table>
