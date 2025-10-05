@@ -8,7 +8,7 @@ export default {
 <template>
   <h1>App</h1>
   <Suspense>
-    <Pokedex />
+    <Pokedex :regionName="Toshkent" />
     <template #fallback>Loading Pokedex...</template>
   </Suspense>
 </template>

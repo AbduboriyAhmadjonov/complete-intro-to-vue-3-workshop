@@ -1,20 +1,21 @@
-<script>
-// https://pokeapi.co/api/v2/pokemon?limit=151
-import { ref } from 'vue'
+<script setup>
+import { ref, defineProps, defineEmits } from 'vue'
 
-export default {
-  async setup() {
-    const regionName = ref('Tashkent')
-    const pokedex = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151').then((res) =>
-      res.json(),
-    )
-    return { pokedex, regionName }
+const props = defineProps({
+  region: {
+    type: String,
+    default: 'Tashkent',
   },
-  methods: {
-    changeRegionName() {
-      this.regionName = 'Kanto'
-    },
-  },
+})
+
+defineEmits(['change-region'])
+
+const regionName = ref(props.region)
+const pokedex = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151').then((res) => res.json())
+
+const changeRegionName = () => {
+  regionName.value = 'Kanto'
+  emit('change-region', regionName.value)
 }
 </script>
 
