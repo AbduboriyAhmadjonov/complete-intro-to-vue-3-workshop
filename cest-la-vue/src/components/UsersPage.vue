@@ -1,34 +1,41 @@
-<script>
-import { reactive } from "vue";
+<script setup>
+import { reactive, defineProps, defineEmits } from "vue";
 
-export default {
-  async setup() {
-    const state = reactive({
-      users: [],
-    });
+const state = reactive({
+  users: [],
+});
 
-    async function fetchUsers() {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/users"
-      ).then((res) => res.json());
-      return response;
-    }
-
-    state.users = await fetchUsers();
-
-    return { state, fetchUsers };
+const props = defineProps({
+  userInfo: {
+    type: String,
+    required: false,
   },
+});
+
+const emit = defineEmits(["updateUserInfo"]);
+
+const updateUserInfo = () => {
+  emit("updateUserInfo", "Updated user info from UsersPage.vue");
 };
+
+async function fetchUsers() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  state.users = await response.json();
+}
+
+fetchUsers();
 </script>
 
 <template>
   <main>
     <h1>Users</h1>
+    {{ props.userInfo }}
     <ul>
       <li v-for="user in state.users" :key="user.id">
         User id: {{ user.id }} - {{ user.name }}
       </li>
     </ul>
+    <button @click="updateUserInfo">Update User Info</button>
   </main>
 </template>
 

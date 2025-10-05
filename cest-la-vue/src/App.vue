@@ -1,34 +1,33 @@
-<script>
+<script setup>
 import HomePage from "./components/HomePage.vue";
 import LoginPage from "./components/LoginPage.vue";
 import UsersPage from "./components/UsersPage.vue";
+import { reactive, computed, toRefs } from "vue";
 
-export default {
-  components: {
-    HomePage,
-    LoginPage,
-    UsersPage,
-  },
-  data: () => ({
-    currentPage: "Home",
-  }),
-  computed: {
-    renderPage() {
-      return this.currentPage + "Page";
-    },
-  },
-  methods: {
-    showHomePage() {
-      this.currentPage = "Home";
-    },
-    showLoginPage() {
-      this.currentPage = "Login";
-    },
-    showUsersPage() {
-      this.currentPage = "Users";
-    },
-  },
-};
+const state = reactive({
+  currentPage: "Home",
+  userInfo: "This is user info passed as a prop",
+});
+
+const pages = { HomePage, LoginPage, UsersPage };
+const renderPage = computed(
+  () => pages[state.currentPage + "Page"] || HomePage
+);
+
+const { userInfo } = toRefs(state);
+
+function showHomePage() {
+  state.currentPage = "Home";
+}
+function showLoginPage() {
+  state.currentPage = "Login";
+}
+function showUsersPage() {
+  state.currentPage = "Users";
+}
+function updateUserInfo(newInfo) {
+  state.userInfo = newInfo;
+}
 </script>
 
 <template>
@@ -42,8 +41,13 @@ export default {
       <a href="#" @click.prevent="showUsersPage">Users</a>
     </nav>
   </header>
+
   <Suspense>
-    <component :is="renderPage" />
+    <component
+      :is="renderPage"
+      :userInfo="userInfo"
+      @updateUserInfo="updateUserInfo"
+    />
     <template #fallback>
       <div style="padding: 1rem">Loading...</div>
     </template>
