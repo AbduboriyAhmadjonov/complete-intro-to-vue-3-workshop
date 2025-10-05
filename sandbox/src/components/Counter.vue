@@ -1,5 +1,10 @@
 <script>
+import { newCount } from '../composables/countStore.js'
+
 export default {
+  setup() {
+    return { newCount }
+  },
   data: () => ({
     count: 10,
     counterTitle: 'Counter Standard',
@@ -22,6 +27,7 @@ export default {
       console.log(newAmount)
       console.log(event)
       this.count += this.optimizedIncrementAmount
+      this.newCount += 10
     },
   },
 }
@@ -29,6 +35,7 @@ export default {
 
 <template>
   <h1>{{ displayTitle }}</h1>
+  <h2>New count: {{ newCount }}</h2>
   <p :data-increment-by="incrementAmount">{{ count }}</p>
   <button @click="incrementCount">Increment Count</button>
   <h1>{{ incrementAmount }}</h1>
