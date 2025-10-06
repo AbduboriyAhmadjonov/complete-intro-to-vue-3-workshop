@@ -1,11 +1,20 @@
-<script></script>
+<script setup>
+import { useState } from "../composables/useState.js";
+const state = useState();
+const emit = defineEmits(["loginEmail"]);
+const handleLogin = (email) => {
+  console.log("Logging in with email:", email);
+  state.email = email;
+  emit("loginEmail", email);
+};
+</script>
 
 <template>
   <main>
     <h1>Login</h1>
     <label for="email">Email</label>
-    <input type="email" />
-    <button>Continue with email</button>
+    <input type="email" v-model="email" />
+    <button @click="handleLogin(email)">Continue with email</button>
   </main>
 </template>
 

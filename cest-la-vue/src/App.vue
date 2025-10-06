@@ -14,6 +14,12 @@ const renderPage = computed(
   () => pages[state.currentPage + "Page"] || HomePage
 );
 
+if (props.loginEmail) {
+  console.log(props.loginEmail);
+
+  renderPage.value = UsersPage;
+}
+
 const { userInfo } = toRefs(state);
 
 function showHomePage() {
